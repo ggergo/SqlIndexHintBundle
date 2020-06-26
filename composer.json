@@ -1,6 +1,6 @@
 {
     "name": "ggergo/sqlindexhintbundle",
-    "description": "SqlWalker extension to apply USE INDEX and FORCE INDEX hints using DQL on top of MySql. Works with both createQuery and createQueryBuilder.",
+    "description": "Doctrine SqlWalker extension to apply USE INDEX and FORCE INDEX hints using DQL on top of MySql. Works with both createQuery and createQueryBuilder.",
     "keywords": ["force", "use", "index", "forceindex", "useindex", "doctrine", "dql", "mysql", "createQueryBuilder", "QueryBuilder", "createQuery"],
     "license": "MIT",
     "authors": [
