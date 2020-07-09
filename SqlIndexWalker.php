@@ -50,10 +50,6 @@ class SqlIndexWalker extends SqlWalker
         $hints = $this->getQuery()->getHint(self::HINT_INDEX);
 
         foreach ($this->getIndexHintParameters($fromClause) as $params) {
-            if (!array_key_exists($params['dqlAlias'], $hints)) {
-                continue;
-            }
-            
             $sql = $this->insertIndex($params['sqlKey'], $params['sqlTableAlias'], $hints[$params['dqlAlias']], $sql);
         }
 
