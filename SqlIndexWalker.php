@@ -126,7 +126,7 @@ class SqlIndexWalker extends SqlWalker
     protected function getSqlTableAliasForJoin(AST\Join $join, $dqlAlias): string
     {
         if ($join->joinAssociationDeclaration instanceof AST\RangeVariableDeclaration) {
-            $class = $this->em->getClassMetadata($joinDeclaration->abstractSchemaName);
+            $class = $this->em->getClassMetadata($join->joinAssociationDeclaration->abstractSchemaName);
 
             return $this->getSQLTableAlias($class->table['name'], $dqlAlias);
         } elseif ($join->joinAssociationDeclaration instanceof AST\JoinAssociationDeclaration) {
