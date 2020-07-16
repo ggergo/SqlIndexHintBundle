@@ -8,7 +8,7 @@ use Doctrine\ORM\Query\SqlWalker;
 /**
  * SqlWalker extension to apply USE INDEX and FORCE INDEX hints using DQL on top of MySql.
  * Works with both createQuery and createQueryBuilder.
- * 
+ *
  * Example:
  *  $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, SqlIndexWalker::class);
  *  $query->setHint(SqlIndexWalker::HINT_INDEX, [
@@ -23,8 +23,8 @@ class SqlIndexWalker extends SqlWalker
 {
     const HINT_INDEX = 'SqlIndexWalker.Index';
 
-    const PREG_KEY_FROM         = 'FROM';
-    const PREG_KEY_JOIN         = 'JOIN';
+    const PREG_KEY_FROM = 'FROM';
+    const PREG_KEY_JOIN = 'JOIN';
 
     /**
      * @var \Doctrine\ORM\EntityManager
@@ -42,7 +42,7 @@ class SqlIndexWalker extends SqlWalker
      *
      * @param AST\FromClause $fromClause
      *
-     * @return string The SQL.
+     * @return string the SQL
      */
     public function walkFromClause($fromClause): string
     {
@@ -64,26 +64,22 @@ class SqlIndexWalker extends SqlWalker
      * Walks down a From clause, thereby generating parameters for index hints.
      *
      * @param AST\FromClause $fromClause
-     * 
-     * @return array
      */
     protected function getIndexHintParameters(AST\FromClause $fromClause): \Generator
     {
         foreach ($fromClause->identificationVariableDeclarations as $identificationVariableDecl) {
-
             yield $this->getFromIndexHintParams($identificationVariableDecl);
             foreach ($identificationVariableDecl->joins as $join) {
-
                 yield $this->getJoinIndexHintParams($join);
             }
         }
     }
 
     /**
-     * Returns parameters for FROM index hints
+     * Returns parameters for FROM index hints.
      * 
      * @param AST\IdentificationVariableDeclaration $identificationVariableDecl
-     *
+     * 
      * @return array
      */
     protected function getFromIndexHintParams(AST\IdentificationVariableDeclaration $identificationVariableDecl): array
@@ -99,10 +95,10 @@ class SqlIndexWalker extends SqlWalker
     }
 
     /**
-     * Returns parameters for JOIN index hints
+     * Returns parameters for JOIN index hints.
      * 
      * @param AST\Join $join
-     *
+     * 
      * @return array
      */
     protected function getJoinIndexHintParams(AST\Join $join): array
@@ -117,21 +113,22 @@ class SqlIndexWalker extends SqlWalker
     }
 
     /**
-     * Returns table alias for JOIN index hints
+     * Returns table alias for JOIN index hints.
      * 
      * @param AST\Join $join
-     *
+     * @param string $dqlAlias
+     * 
      * @return string
      */
-    protected function getSqlTableAliasForJoin(AST\Join $join, $dqlAlias): string
+    protected function getSqlTableAliasForJoin(AST\Join $join, string $dqlAlias): string
     {
         if ($join->joinAssociationDeclaration instanceof AST\RangeVariableDeclaration) {
             $class = $this->em->getClassMetadata($join->joinAssociationDeclaration->abstractSchemaName);
 
             return $this->getSQLTableAlias($class->table['name'], $dqlAlias);
         } elseif ($join->joinAssociationDeclaration instanceof AST\JoinAssociationDeclaration) {
-            $relation       = $this->getQueryComponents()[$dqlAlias]['relation'];
-            $targetClass    = $this->em->getClassMetadata($relation['targetEntity']);
+            $relation = $this->getQueryComponents()[$dqlAlias]['relation'];
+            $targetClass = $this->em->getClassMetadata($relation['targetEntity']);
 
             return $this->getSQLTableAlias($targetClass->getTableName(), $dqlAlias);
         }
@@ -140,9 +137,9 @@ class SqlIndexWalker extends SqlWalker
     }
 
     /**
-     * Inserts index hints into sql query string
-     * 
-     * @param string $sqlKey ie: FROM|INNER JOIN|LEFT JOIN
+     * Inserts index hints into sql query string.
+     *
+     * @param string $sqlKey ie: FROM|JOIN|INNER JOIN|LEFT JOIN
      * @param string $sqlTableAlias
      * @param string $indexExp
      * @param string $sqlQueryString

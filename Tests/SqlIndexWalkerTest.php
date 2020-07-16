@@ -2,7 +2,6 @@
 
 namespace Ggergo\SqlIndexHintBundle\Tests;
 
-use Doctrine\ORM\Query\AST;
 use Ggergo\SqlIndexHintBundle\SqlIndexWalker;
 use PHPUnit\Framework\TestCase;
 
@@ -11,8 +10,8 @@ class SqlIndexWalkerTest extends TestCase
     use AccessModifierTrait;
 
     /**
-     * Since the parent Sql walker class does not have a nearly complete unit test, we are only testing the core functionality of the extension which happens to be a protected method. ¯\_(ツ)_/¯
-     * 
+     * Since the parent Sql walker class does not have a nearly complete unit test, we are only testing the core functionality of the extension which happens to be a protected method. ¯\_(ツ)_/¯.
+     *
      * @dataProvider provideDataForTestInsertIndex
      */
     public function testInsertIndex($sqlKey, $sqlTableAlias, $indexExp, $sqlQueryString, $correctSql)
