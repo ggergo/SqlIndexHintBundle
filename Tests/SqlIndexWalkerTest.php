@@ -25,6 +25,7 @@ class SqlIndexWalkerTest extends TestCase
     public function provideDataForTestInsertIndex()
     {
         return [
+            ['FROM', 'a', 'FORCE INDEX (PRIMARY)', 'SELECT * FROM schema.table a;', 'SELECT * FROM schema.table a FORCE INDEX (PRIMARY) ;'],
             ['FROM', 'a', 'FORCE INDEX (PRIMARY)', 'SELECT * FROM table a;', 'SELECT * FROM table a FORCE INDEX (PRIMARY) ;'],
             ['FROM', 'a', 'FORCE INDEX (PRIMARY)', 'SELECT * FROM table AS a;', 'SELECT * FROM table AS a FORCE INDEX (PRIMARY) ;'],
             ['FROM', 'a', 'FORCE INDEX (PRIMARY)', 'select * from table as a;', 'select * from table as a FORCE INDEX (PRIMARY) ;'],

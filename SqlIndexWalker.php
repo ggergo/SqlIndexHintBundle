@@ -148,6 +148,6 @@ class SqlIndexWalker extends SqlWalker
      */
     protected function insertIndex(string $sqlKey, string $sqlTableAlias, string $indexExp, string $sqlQueryString): string
     {
-        return preg_replace('#(\b(?i)'.$sqlKey.'\s*(\w+\s+(?i)(as\s+)?'.$sqlTableAlias.')\s*)#', '\1 '.$indexExp.' ', $sqlQueryString);
+        return preg_replace('#(\b(?i)'.$sqlKey.'\s*([\w\.]+\s+(?i)(as\s+)?'.$sqlTableAlias.')\s*)#', '\1 '.$indexExp.' ', $sqlQueryString);
     }
 }
