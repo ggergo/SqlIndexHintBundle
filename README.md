@@ -9,6 +9,7 @@ You can set different index hints per DQL table aliases.
 Example:
 ```
 use Ggergo\SqlIndexHintBundle\SqlIndexWalker;
+use Doctrine\ORM\Query;
 ...
 $query = ...;
 $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, SqlIndexWalker::class);
@@ -24,9 +25,5 @@ $query->setHint(SqlIndexWalker::HINT_INDEX, [
 Require with composer, ie.:
 
 ```
-{
-    "require": {
-        "ggergo/sqlindexhintbundle": "*"
-    }
-}
+composer require ggergo/sqlindexhintbundle:*
 ```
