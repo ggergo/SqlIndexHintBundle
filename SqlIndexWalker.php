@@ -60,12 +60,17 @@ class SqlIndexWalker extends SqlWalker
         return $sql;
     }
 
+    public function walkSubselectFromClause($subselectFromClause)
+    {
+        return $this->walkFromClause($subselectFromClause);
+    }
+
     /**
      * Walks down a From clause, thereby generating parameters for index hints.
      *
-     * @param AST\FromClause $fromClause
+     * @param AST\FromClause|AST\SubselectFromClause $fromClause
      */
-    protected function getIndexHintParameters(AST\FromClause $fromClause): \Generator
+    protected function getIndexHintParameters($fromClause): \Generator
     {
         foreach ($fromClause->identificationVariableDeclarations as $identificationVariableDecl) {
             yield $this->getFromIndexHintParams($identificationVariableDecl);
